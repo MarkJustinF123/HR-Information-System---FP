@@ -1,0 +1,441 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict o5FqbucElRelrLtmqSiRbw8hIUMAff1FPezbW5IZb9CTojroidxUG7IgwDHEwv5
+
+-- Dumped from database version 17.7
+-- Dumped by pg_dump version 17.7
+
+-- Started on 2025-12-19 09:43:14
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- TOC entry 218 (class 1259 OID 24641)
+-- Name: department; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.department (
+    dept_id integer NOT NULL,
+    dept_name character varying(50) NOT NULL,
+    location character varying(100)
+);
+
+
+ALTER TABLE public.department OWNER TO postgres;
+
+--
+-- TOC entry 217 (class 1259 OID 24640)
+-- Name: department_dept_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.department_dept_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.department_dept_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4935 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: department_dept_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.department_dept_id_seq OWNED BY public.department.dept_id;
+
+
+--
+-- TOC entry 222 (class 1259 OID 24655)
+-- Name: personalinfo; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.personalinfo (
+    employee_id integer NOT NULL,
+    first_name character varying(50) NOT NULL,
+    last_name character varying(50) NOT NULL,
+    email character varying(100),
+    phone_number character varying(20),
+    hire_date date DEFAULT CURRENT_DATE,
+    dept_id integer,
+    position_id integer
+);
+
+
+ALTER TABLE public.personalinfo OWNER TO postgres;
+
+--
+-- TOC entry 221 (class 1259 OID 24654)
+-- Name: personalinfo_employee_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.personalinfo_employee_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.personalinfo_employee_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4936 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: personalinfo_employee_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.personalinfo_employee_id_seq OWNED BY public.personalinfo.employee_id;
+
+
+--
+-- TOC entry 220 (class 1259 OID 24648)
+-- Name: positions; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.positions (
+    position_id integer NOT NULL,
+    title character varying(50) NOT NULL,
+    base_salary_range character varying(50)
+);
+
+
+ALTER TABLE public.positions OWNER TO postgres;
+
+--
+-- TOC entry 219 (class 1259 OID 24647)
+-- Name: positions_position_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.positions_position_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.positions_position_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4937 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: positions_position_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.positions_position_id_seq OWNED BY public.positions.position_id;
+
+
+--
+-- TOC entry 224 (class 1259 OID 24675)
+-- Name: salary; Type: TABLE; Schema: public; Owner: postgres
+--
+
+CREATE TABLE public.salary (
+    salary_id integer NOT NULL,
+    employee_id integer,
+    amount numeric(10,2) NOT NULL
+);
+
+
+ALTER TABLE public.salary OWNER TO postgres;
+
+--
+-- TOC entry 223 (class 1259 OID 24674)
+-- Name: salary_salary_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE public.salary_salary_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER SEQUENCE public.salary_salary_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 4938 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: salary_salary_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE public.salary_salary_id_seq OWNED BY public.salary.salary_id;
+
+
+--
+-- TOC entry 4757 (class 2604 OID 24644)
+-- Name: department dept_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.department ALTER COLUMN dept_id SET DEFAULT nextval('public.department_dept_id_seq'::regclass);
+
+
+--
+-- TOC entry 4759 (class 2604 OID 24658)
+-- Name: personalinfo employee_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personalinfo ALTER COLUMN employee_id SET DEFAULT nextval('public.personalinfo_employee_id_seq'::regclass);
+
+
+--
+-- TOC entry 4758 (class 2604 OID 24651)
+-- Name: positions position_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.positions ALTER COLUMN position_id SET DEFAULT nextval('public.positions_position_id_seq'::regclass);
+
+
+--
+-- TOC entry 4761 (class 2604 OID 24678)
+-- Name: salary salary_id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salary ALTER COLUMN salary_id SET DEFAULT nextval('public.salary_salary_id_seq'::regclass);
+
+
+--
+-- TOC entry 4923 (class 0 OID 24641)
+-- Dependencies: 218
+-- Data for Name: department; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.department (dept_id, dept_name, location) FROM stdin;
+1	IT Development	3rd Floor, Bldg A
+2	Human Resources	2nd Floor, Bldg A
+3	Finance	2nd Floor, Bldg B
+4	Marketing	1st Floor, Bldg C
+5	Operations	Ground Floor, Warehouse
+\.
+
+
+--
+-- TOC entry 4927 (class 0 OID 24655)
+-- Dependencies: 222
+-- Data for Name: personalinfo; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.personalinfo (employee_id, first_name, last_name, email, phone_number, hire_date, dept_id, position_id) FROM stdin;
+2	Maria	Santos	maria.santos@company.com	09181234567	2023-02-10	2	3
+3	Jose	Reyes	jose.reyes@company.com	09191234567	2023-03-01	3	4
+4	Ana	Garcia	ana.garcia@company.com	09201234567	2023-03-20	4	3
+5	Pedro	Penduko	pedro.p@company.com	09211234567	2023-04-05	5	5
+6	Liza	Soberano	liza.s@company.com	09221234567	2023-05-12	1	1
+7	Coco	Martin	coco.m@company.com	09231234567	2023-06-15	5	5
+8	Kathryn	Bernardo	kath.b@company.com	09241234567	2023-07-01	4	3
+9	Daniel	Padilla	daniel.p@company.com	09251234567	2023-08-20	1	1
+10	Nadine	Lustre	nadine.l@company.com	09261234567	2023-09-10	2	3
+11	James	Reid	james.r@company.com	09271234567	2023-10-05	3	4
+12	Enrique	Gil	enrique.g@company.com	09281234567	2023-11-11	1	1
+13	Maine	Mendoza	maine.m@company.com	09291234567	2023-12-01	2	3
+14	Alden	Richards	alden.r@company.com	09301234567	2024-01-15	5	5
+15	Bea	Alonzo	bea.a@company.com	09311234567	2024-02-20	4	3
+16	John	Lloyd	john.l@company.com	09321234567	2024-03-10	3	4
+17	Dingdong	Dantes	dingdong.d@company.com	09331234567	2024-04-05	5	5
+18	Marian	Rivera	marian.r@company.com	09341234567	2024-05-25	2	3
+19	Vice	Ganda	vice.g@company.com	09351234567	2024-06-30	4	3
+20	Anne	Curtis	anne.c@company.com	09361234567	2024-07-15	1	2
+23	Juan 	Dela Cruz	juandelacruz@gmail.com	09889846670	2025-12-14	1	8
+25	Anne 	Curtis	annne@example.com	09234135579	2025-12-14	3	4
+\.
+
+
+--
+-- TOC entry 4925 (class 0 OID 24648)
+-- Dependencies: 220
+-- Data for Name: positions; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.positions (position_id, title, base_salary_range) FROM stdin;
+1	Junior Developer	20k-30k
+2	Senior Developer	50k-80k
+3	HR Specialist	20k-25k
+4	Accountant	25k-35k
+5	Operations Manager	40k-60k
+6	Junior IT Technician	TBD
+7	scrt	TBD
+8	Juinor IT Technician	TBD
+12	Manager	TBD
+\.
+
+
+--
+-- TOC entry 4929 (class 0 OID 24675)
+-- Dependencies: 224
+-- Data for Name: salary; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.salary (salary_id, employee_id, amount) FROM stdin;
+2	2	22000.00
+3	3	28000.00
+4	4	23000.00
+5	5	45000.00
+6	6	25000.00
+7	7	46000.00
+8	8	24000.00
+9	9	26000.00
+10	10	22500.00
+11	11	29000.00
+12	12	25500.00
+13	13	23500.00
+14	14	47000.00
+15	15	24500.00
+16	16	30000.00
+17	17	50000.00
+18	18	22000.00
+19	19	25000.00
+20	20	70000.00
+23	23	25000.00
+24	25	18000.00
+\.
+
+
+--
+-- TOC entry 4939 (class 0 OID 0)
+-- Dependencies: 217
+-- Name: department_dept_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.department_dept_id_seq', 5, true);
+
+
+--
+-- TOC entry 4940 (class 0 OID 0)
+-- Dependencies: 221
+-- Name: personalinfo_employee_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.personalinfo_employee_id_seq', 37, true);
+
+
+--
+-- TOC entry 4941 (class 0 OID 0)
+-- Dependencies: 219
+-- Name: positions_position_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.positions_position_id_seq', 18, true);
+
+
+--
+-- TOC entry 4942 (class 0 OID 0)
+-- Dependencies: 223
+-- Name: salary_salary_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.salary_salary_id_seq', 28, true);
+
+
+--
+-- TOC entry 4763 (class 2606 OID 24646)
+-- Name: department department_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.department
+    ADD CONSTRAINT department_pkey PRIMARY KEY (dept_id);
+
+
+--
+-- TOC entry 4767 (class 2606 OID 24663)
+-- Name: personalinfo personalinfo_email_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personalinfo
+    ADD CONSTRAINT personalinfo_email_key UNIQUE (email);
+
+
+--
+-- TOC entry 4769 (class 2606 OID 24661)
+-- Name: personalinfo personalinfo_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personalinfo
+    ADD CONSTRAINT personalinfo_pkey PRIMARY KEY (employee_id);
+
+
+--
+-- TOC entry 4765 (class 2606 OID 24653)
+-- Name: positions positions_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.positions
+    ADD CONSTRAINT positions_pkey PRIMARY KEY (position_id);
+
+
+--
+-- TOC entry 4771 (class 2606 OID 24682)
+-- Name: salary salary_employee_id_key; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salary
+    ADD CONSTRAINT salary_employee_id_key UNIQUE (employee_id);
+
+
+--
+-- TOC entry 4773 (class 2606 OID 24680)
+-- Name: salary salary_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salary
+    ADD CONSTRAINT salary_pkey PRIMARY KEY (salary_id);
+
+
+--
+-- TOC entry 4774 (class 2606 OID 24664)
+-- Name: personalinfo personalinfo_dept_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personalinfo
+    ADD CONSTRAINT personalinfo_dept_id_fkey FOREIGN KEY (dept_id) REFERENCES public.department(dept_id);
+
+
+--
+-- TOC entry 4775 (class 2606 OID 24669)
+-- Name: personalinfo personalinfo_position_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.personalinfo
+    ADD CONSTRAINT personalinfo_position_id_fkey FOREIGN KEY (position_id) REFERENCES public.positions(position_id);
+
+
+--
+-- TOC entry 4776 (class 2606 OID 24683)
+-- Name: salary salary_employee_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY public.salary
+    ADD CONSTRAINT salary_employee_id_fkey FOREIGN KEY (employee_id) REFERENCES public.personalinfo(employee_id) ON DELETE CASCADE;
+
+
+-- Completed on 2025-12-19 09:43:15
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict o5FqbucElRelrLtmqSiRbw8hIUMAff1FPezbW5IZb9CTojroidxUG7IgwDHEwv5
+
